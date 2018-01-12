@@ -3,17 +3,19 @@
 import os
 import logging as log
 # Try to import modules needed for Google App Engine just in case
+import urllib
+import json
 try:
     from google.appengine.api import urlfetch
     from google.appengine.runtime import DeadlineExceededError
-    import urllib
-    import json
 except:
     pass
 
 # Try to import requests just in case
 try:
+    print("A")
     import requests
+    print("B")
 except:
     pass
 
@@ -34,7 +36,9 @@ class Requests():
         resp = None
         for i in range(4):
             try:
+                print(params)
                 resp = requests.get(url, params=params, timeout=5)
+                print(resp.url)
             except requests.Timeout:
                 trimmed_params = {k: v for k, v in params.iteritems() if k not in ST_BASE_PARAMS.keys()}
                 log.error('GET Timeout to {} w/ {}'.format(url[len(ST_BASE_URL):], trimmed_params))

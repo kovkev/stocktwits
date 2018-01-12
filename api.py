@@ -1,10 +1,10 @@
+from __future__ import absolute_import
 import logging as log
-from requestors import ST_BASE_PARAMS, ST_BASE_URL
-
+from .requestors import ST_BASE_PARAMS, ST_BASE_URL
 
 # Select which library to use for handling HTTP request.  If running on Google App Engine, use `GAE`.
 # Otherwise, use `Requests` which is based on the `requests` module.
-from requestors import Requests as R
+from .requestors import Requests as R
 
 __author__ = 'Jason Haury'
 
@@ -29,16 +29,29 @@ def get_stock_stream(symbol, params={}):
     """ gets stream of messages for given symbol
     """
     all_params = ST_BASE_PARAMS.copy()
-    for k, v in params.iteritems():
+    for k, v in params.items():
         all_params[k] = v
     return R.get_json(ST_BASE_URL + 'streams/symbol/{}.json'.format(symbol), params=all_params)
 
+def get_user_messages(user_id, params={}):
+    all_params = ST_BASE_PARAMS.copy()
+    for k, v in params.items():
+        all_params[k] = v
+    print("AAA")
+    print(all_params)
+    return R.get_json(ST_BASE_URL + 'streams/user/{}.json'.format(user_id), params=all_params)
+
+def get_user(user_id, params={}):
+    all_params = ST_BASE_PARAMS.copy()
+    for k, v in params.items():
+        all_params[k] = v
+    return R.get_json(ST_BASE_URL + 'streams/user/{}.json'.format(user_id), params=all_params)
 
 def get_message_stream(wl_id, params={}):
     """ Gets up to 30 messages from Watchlist (wl_id) according to additional params
     """
     all_params = ST_BASE_PARAMS.copy()
-    for k, v in params.iteritems():
+    for k, v in params.items():
         all_params[k] = v
     return R.get_json(ST_BASE_URL + 'streams/watchlist/{}.json'.format(wl_id), params=all_params)
 
